@@ -39,7 +39,7 @@ public class LegalConstitutionService {
 
     public LegalConstitution edit(LegalConstitution legalConstitution) {
         Optional<LegalConstitution> optionalLegalConstitution = legalConstitutionRepository.
-                findOneByDescriptionContainingIgnoreCaseOrCodeAndIdNot(legalConstitution.getDescription(), legalConstitution.getCode(), legalConstitution.getId());
+                findOneByDescriptionIgnoreCaseOrCodeAndIdNot(legalConstitution.getDescription(), legalConstitution.getCode(), legalConstitution.getId());
         if(optionalLegalConstitution.isEmpty()){
             return legalConstitutionRepository.save(legalConstitution);
         }else {
