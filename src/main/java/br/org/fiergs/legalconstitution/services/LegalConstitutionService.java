@@ -15,7 +15,11 @@ public class LegalConstitutionService {
     private LegalConstitutionRepository legalConstitutionRepository;
 
     public List<LegalConstitution> list(){
-        return legalConstitutionRepository.findAll();
+        List<LegalConstitution> legalConstitutionsExists = legalConstitutionRepository.findAll();
+        if(legalConstitutionsExists.isEmpty()){
+            throw new RuntimeException("Nenhuma Constituição juridica encontrada");
+        }
+        return legalConstitutionsExists;
     }
 
     public Optional<LegalConstitution> findByDescription(String description){
@@ -31,7 +35,7 @@ public class LegalConstitutionService {
         Optional<LegalConstitution> descriptionOrCodeExists = legalConstitutionRepository.
                 findByCodeOrDescriptionContainingIgnoreCase(legalConstitution.getCode(), legalConstitution.getDescription());
         if(descriptionOrCodeExists.isPresent()){
-            throw new RuntimeException("Descrição ou códgio já está cadastrado");
+            throw new RuntimeException("Descrição ou código já está cadastrado");
         }
 
         return this.legalConstitutionRepository.save(legalConstitution);
@@ -43,7 +47,7 @@ public class LegalConstitutionService {
         if(optionalLegalConstitution.isEmpty()){
             return legalConstitutionRepository.save(legalConstitution);
         }else {
-            throw new RuntimeException("Descrição ou códgio já está cadastrado");
+            throw new RuntimeException("Descrição ou código já está cadastrado");
         }
     }
 

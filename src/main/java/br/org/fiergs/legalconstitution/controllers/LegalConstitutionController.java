@@ -27,7 +27,7 @@ public class LegalConstitutionController {
     }
 
     @PostMapping
-    public LegalConstitution save(@Valid LegalConstitution legalConstitution){
+    public LegalConstitution save(@RequestBody @Valid LegalConstitution legalConstitution){
         return legalConstitutionService.save(legalConstitution);
     }
 
