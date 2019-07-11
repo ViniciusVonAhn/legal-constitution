@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -22,15 +22,16 @@ public class LegalConstitution {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqCad_legalconstitution")
     private Long id;
 
-    @NotNull(message = "Código é obrigatório")
-    @Size(max = 20, message = "Maximo de 20 caracteres")
+    @Size(max = 20, message = "Chave deve ser menor que 21 caracteres")
+    private String key;
+
+    @NotEmpty(message = "Código é obrigatório")
+    @Size(max = 11, message = "Maximo de 11 caracteres")
     private String code;
 
-    @NotNull(message = "Descrição é obrigatório")
+    @NotEmpty(message = "Nome é obrigatório")
     @Size(max = 20, message = "Maximo de 20 caracteres")
-    private String description;
+    private String name;
 
-    private String icm;
-
-    private boolean status;
+    private boolean active = true;
 }

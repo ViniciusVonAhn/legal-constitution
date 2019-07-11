@@ -22,20 +22,20 @@ public class LegalConstitutionService {
         return legalConstitutionsExists;
     }
 
-    public Optional<LegalConstitution> findByDescription(String description){
-        Optional<LegalConstitution> descriptionExists = legalConstitutionRepository.findByDescriptionContainingIgnoreCase(description);
-        if(descriptionExists.isPresent() && descriptionExists != null) {
-            return legalConstitutionRepository.findByDescriptionContainingIgnoreCase(description);
+    public Optional<List<LegalConstitution>> findByName(String name){
+        Optional<List<LegalConstitution>> nameExists = legalConstitutionRepository.findByNameContainingIgnoreCase(name);
+        if(nameExists.isPresent()) {
+            return legalConstitutionRepository.findByNameContainingIgnoreCase(name);
         }else{
-            throw new RuntimeException("Nenhuma descrição encontrado");
+            throw new RuntimeException("Nenhum nome encontrado");
         }
     }
 
     public LegalConstitution save(LegalConstitution legalConstitution) {
-        Optional<LegalConstitution> descriptionOrCodeExists = legalConstitutionRepository.
-                findByCodeOrDescriptionContainingIgnoreCase(legalConstitution.getCode(), legalConstitution.getDescription());
-        if(descriptionOrCodeExists.isPresent()){
-            throw new RuntimeException("Descrição ou código já está cadastrado");
+        Optional<LegalConstitution> nameOrCodeExists = legalConstitutionRepository.
+                findByCodeOrNameContainingIgnoreCase(legalConstitution.getCode(), legalConstitution.getName());
+        if(nameOrCodeExists.isPresent()){
+            throw new RuntimeException("Nome ou código já está cadastrado");
         }
 
         return this.legalConstitutionRepository.save(legalConstitution);
@@ -43,11 +43,11 @@ public class LegalConstitutionService {
 
     public LegalConstitution edit(LegalConstitution legalConstitution) {
         Optional<LegalConstitution> optionalLegalConstitution = legalConstitutionRepository.
-                findOneByDescriptionIgnoreCaseOrCodeAndIdNot(legalConstitution.getDescription(), legalConstitution.getCode(), legalConstitution.getId());
+                findOneByNameIgnoreCaseOrCodeAndIdNot(legalConstitution.getName(), legalConstitution.getCode(), legalConstitution.getId());
         if(optionalLegalConstitution.isEmpty()){
             return legalConstitutionRepository.save(legalConstitution);
         }else {
-            throw new RuntimeException("Descrição ou código já está cadastrado");
+            throw new RuntimeException("Nome ou código já está cadastrado");
         }
     }
 

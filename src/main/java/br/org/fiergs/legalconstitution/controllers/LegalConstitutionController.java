@@ -21,9 +21,9 @@ public class LegalConstitutionController {
         return legalConstitutionService.list();
     }
 
-    @GetMapping("/{description}")
-    public Optional<LegalConstitution> listByDescription(@PathVariable("description")  String description){
-        return legalConstitutionService.findByDescription(description);
+    @GetMapping("/{name}")
+    public Optional<List<LegalConstitution>> listByName(@PathVariable("name")  String name){
+        return legalConstitutionService.findByName(name);
     }
 
     @PostMapping
